@@ -17,7 +17,8 @@ namespace MetaDataStringEditor {
             this.OriginStrBytes = OriginStrBytes;
             IsEdit = false;
 
-            Text = Encoding.UTF8.GetString(OriginStrBytes);
+            Text = (string)Tag;
+            SubItems.Add(Encoding.UTF8.GetString(OriginStrBytes));
             SubItems.Add("");
             SubItems.Add("");
         }
@@ -26,22 +27,23 @@ namespace MetaDataStringEditor {
             NewStrBytes = Encoding.UTF8.GetBytes(newString);
             IsEdit = !Equals(OriginStrBytes, NewStrBytes);
 
-            SubItems[1].Text = IsEdit ? newString : "";
-            SubItems[2].Text = IsEdit ? "*" : "";
+            SubItems[2].Text = IsEdit ? newString : "";
+            SubItems[3].Text = IsEdit ? "*" : "";
         }
 
         public void Discard() {
             NewStrBytes = null;
             IsEdit = false;
 
-            SubItems[1].Text = "";
             SubItems[2].Text = "";
+            SubItems[3].Text = "";
         }
 
         public bool MatchKeyWord(string keyWord) {
             return Text.ToLower().Contains(keyWord.ToLower()) ||
-                SubItems[0].Text.ToLower().Contains(keyWord.ToLower()) ||
-                SubItems[1].Text.ToLower().Contains(keyWord.ToLower());
+                SubItems[1].Text.ToLower().Contains(keyWord.ToLower()) ||
+                SubItems[2].Text.ToLower().Contains(keyWord.ToLower()) ||
+                SubItems[3].Text.ToLower().Contains(keyWord.ToLower());
         }
     }
 }
